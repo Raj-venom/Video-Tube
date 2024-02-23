@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend with NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodjs",
+    "js",
+    "backend"
+  ],
+  "author": "Raj singh",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

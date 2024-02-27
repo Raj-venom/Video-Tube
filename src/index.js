@@ -12,8 +12,10 @@ connectDB()
 
 .then( () => {
 
+    // check if app and mongoDb can talk or not
+
     app.on("error", (error) =>{
-        console.log("ERROR: ", error)
+        console.log("app not able to talk to Db ERROR: ", error)
         throw error
     })
 
@@ -41,6 +43,23 @@ connectDB()
 .catch( (err) =>{
     console.log("MONGoDb conncetion Failed !!", err);
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

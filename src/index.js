@@ -19,21 +19,8 @@ connectDB()
         throw error
     })
 
-    app.get("/", (req, res) =>{
-        res.send("<h1> This is home </h1>")
-    })
-
-    app.get("/profile", (req, res) =>{
-        res.send("this is profile")
-    })
-
-    app.get("/data", (req, res) =>{
-        
-        res.json({ "user": 'raj singh' })
-    })
-
     app.listen(process.env.PORT || 3000, () => {
-        console.log(`Server is running at port : ${process.env.PORT}`)
+        console.log(`⚙️  Server is running at port : ${process.env.PORT}`)
     })
 
     console.log(`http://localhost:${process.env.PORT}`)

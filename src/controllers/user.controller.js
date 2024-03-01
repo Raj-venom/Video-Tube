@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js"
 import { User } from "../models/user.models.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse }  from "../utils/ApiResponse.js"
+import fs from "fs"
 
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -30,7 +31,7 @@ const registerUser = asyncHandler(async (req, res) => {
         // check if any field is empty or not
         [fullName, email, username, password].some((field) => field?.trim() === "")
     ) {
-        throw new ApiError(400, "All field are required")
+        throw new ApiError(400, "All field are required")        
     }
 
     // if finds any of the field in data base it return true
@@ -58,6 +59,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     if (!avatarLocalPath) {
+        fs.unlinkSync(coverImageLocalPath) // Removes the coverImage from local server when avatar not found
         throw new ApiError(400, "Avatar file is required")
     }
 
@@ -65,10 +67,6 @@ const registerUser = asyncHandler(async (req, res) => {
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
-
-    // if (coverImageLocalPath) {
-    // const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-    // }
 
     // create user object - create entry in db
     const user = await User.create({
@@ -98,7 +96,6 @@ const registerUser = asyncHandler(async (req, res) => {
     return res.status(201).json(
         new ApiResponse(200, createUser, "User registered successfully")
     )
-
 
 
 })

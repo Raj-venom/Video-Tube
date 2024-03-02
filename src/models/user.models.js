@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            lowecase: true,
+            lowercase: true,
             trim: true,
 
             // if we want any field searchable we use "index: true"
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            lowecase: true,
+            lowercase: true,
             trim: true
         },
 

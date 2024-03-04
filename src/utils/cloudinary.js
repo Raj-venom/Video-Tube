@@ -35,5 +35,27 @@ const uploadOnCloudinary = async (localFilePath) => {
 
 }
 
+const deleteFromCloudinary = async (cloudinaryPublicUrl) => {
 
-export { uploadOnCloudinary }
+    try {
+
+        if (!cloudinaryPublicUrl) {
+            console.log("cloudinaryPublicUrl is required")
+            return null
+        }
+
+        // extracting file name without extension (.png)
+        const urlArray = cloudinaryPublicUrl.split("/")
+        const imageFullName = urlArray[(urlArray.length) - 1]
+        const imageName = imageFullName.split(".")[0]
+
+        const response = await cloudinary.uploader.destroy(imageName)
+
+        return response.result
+
+    } catch (error) {
+        console.log("Error while deleting file from cloudinary", error)
+    }
+}
+
+export { uploadOnCloudinary, deleteFromCloudinary }

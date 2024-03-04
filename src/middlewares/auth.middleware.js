@@ -23,7 +23,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
             throw new ApiError(401, "Invalid Access Token")
         }
 
-        // created new user object filed in req to use further 
+        // created new user object filed in req to use further in controlers as 'req.user' we get all infromation of user from db 
         req.user = user;
         next()
 

@@ -190,13 +190,14 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const logoutUser = asyncHandler(async (req, res) => {
 
-    User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
 
         req.user._id, // this req.user object from auth.middleware
         {
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1 // this removes the field from document
             }
+
         },
         {
             new: true

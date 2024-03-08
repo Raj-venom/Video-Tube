@@ -64,9 +64,6 @@ const registerUser = asyncHandler(async (req, res) => {
         $or: [{ username }, { email }]
     })
 
-    if (existedUser) {
-        throw new ApiError(409, "User with email or username already exists")
-    }
 
     // upload files to local Server
     // const avatarLocalPath = req.files?.avatar[0]?.path;   
@@ -89,6 +86,16 @@ const registerUser = asyncHandler(async (req, res) => {
         fs.unlinkSync(coverImageLocalPath) // Removes the coverImage from local server when avatar not found
         throw new ApiError(400, "Avatar file is required")
     }
+
+    if (existedUser) {
+        fs.unlinkSync(avatarLocalPath)
+
+        if(coverImageLocalPath){
+            fs.unlinkSync(coverImageLocalPath) // Removes the coverImage from local server when avatar not found
+        }
+        throw new ApiError(409, "User with email or username already exists")
+    }
+
 
     // upload files to Cloudinary
     const avatar = await uploadOnCloudinary(avatarLocalPath)

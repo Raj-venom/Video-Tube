@@ -30,7 +30,7 @@ const createTweet = asyncHandler(async (req, res) => {
 
     return res
         .status(201)
-        .json(new ApiResponse(200, content, "Tweeted Successfully"))
+        .json(new ApiResponse(200, createdTweet, "Tweeted Successfully"))
 
 })
 

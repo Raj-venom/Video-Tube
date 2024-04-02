@@ -83,14 +83,17 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     if (!avatarLocalPath) {
-        fs.unlinkSync(coverImageLocalPath) // Removes the coverImage from local server when avatar not found
+        // remover coverImage if avatar is not uploaded
+        if (coverImageLocalPath) {
+            fs.unlinkSync(coverImageLocalPath) // Removes the coverImage from local server when avatar not found
+        }
         throw new ApiError(400, "Avatar file is required")
     }
 
     if (existedUser) {
         fs.unlinkSync(avatarLocalPath)
 
-        if(coverImageLocalPath){
+        if (coverImageLocalPath) {
             fs.unlinkSync(coverImageLocalPath) // Removes the coverImage from local server when avatar not found
         }
         throw new ApiError(409, "User with email or username already exists")
@@ -322,8 +325,8 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
         req.user?._id,
         {
             $set: {
-                fullName,
-                email
+                fullName: fullName?.trim(),
+                email: email?.trim()
             }
         },
         { new: true }
